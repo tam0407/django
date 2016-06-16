@@ -185,7 +185,7 @@ class AbstractUserTestCase(TestCase):
             User(username='user', password='foo', email='foo@bar.com').save()
             self.assertEqual(normalize_email.call_count, 1)
 
-    def test_user_sace_normalize_username(self):
+    def test_user_save_normalize_username(self):
         """
         Calling user.save() will call normalize_username()
         """
