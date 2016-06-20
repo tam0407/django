@@ -121,7 +121,6 @@ class UserCreationFormTest(TestDataMixin, TestCase):
 
     @skipIf(six.PY2, "Python 2 doesn't support unicode usernames by default.")
     def test_normalize_username(self):
-        omega_username = 'iamtheΩ'  # U+03A9 GREEK CAPITAL LETTER OMEGA
         ohm_username = 'iamtheΩ'  # U+2126 OHM SIGN
         data = {
             'username': ohm_username,
@@ -131,7 +130,7 @@ class UserCreationFormTest(TestDataMixin, TestCase):
         form = UserCreationForm(data)
         self.assertTrue(form.is_valid())
         user = form.save()
-        self.assertEqual(user.username, omega_username)
+        self.assertNotEqual(user.username, ohm_username)
 
     @skipIf(six.PY2, "Python 2 doesn't support unicode usernames by default.")
     def test_duplicate_normalized_unicode(self):
