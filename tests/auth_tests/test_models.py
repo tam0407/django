@@ -176,23 +176,23 @@ class AbstractUserTestCase(TestCase):
         user2 = User.objects.create_user(username='user2')
         self.assertIsNone(user2.last_login)
 
-    def test_user_save_normalize_email(self):
+    def test_user_clean_normalize_email(self):
         """
         Calling user.save() will call normalize_email()
         """
-        with mock.patch('django.contrib.auth.models.UserManager.normalize_email') as normalize_email:
-            normalize_email.side_effect = lambda x: x
-            User.objects.create_user(username='user', password='foo', email='foo@bar.com')
-            self.assertEqual(normalize_email.call_count, 1)
+        user = User(username='user', password='foo', email='foo@BAR.com')
+        user.clean()
+        self.assertEqual(user.email, 'foo@bar.com')
 
-    def test_user_save_normalize_username(self):
+    def test_user_clean_normalize_username(self):
         """
         Calling user.save() will call normalize_username()
         """
-        with mock.patch('django.contrib.auth.models.UserManager.normalize_username') as normalize_username:
-            normalize_username.side_effect = lambda x: x
-            User.objects.create_user(username='user', password='foo')
-            self.assertEqual(normalize_username.call_count, 1)
+        omega_username = 'iamtheΩ'  # U+03A9 GREEK CAPITAL LETTER OMEGA
+        ohm_username = 'iamtheΩ'  # U+2126 OHM SIGN
+        user = User(username=ohm_username, password='foo')
+        user.clean()
+        self.assertEqual(user.username, omega_username)
 
     def test_user_double_save(self):
         """
