@@ -182,7 +182,7 @@ class AbstractUserTestCase(TestCase):
         """
         with mock.patch('django.contrib.auth.models.UserManager.normalize_email') as normalize_email:
             normalize_email.side_effect = lambda x: x
-            User(username='user', password='foo', email='foo@bar.com').save()
+            User.objects.create_user(username='user', password='foo', email='foo@bar.com')
             self.assertEqual(normalize_email.call_count, 1)
 
     def test_user_save_normalize_username(self):
@@ -191,7 +191,7 @@ class AbstractUserTestCase(TestCase):
         """
         with mock.patch('django.contrib.auth.models.UserManager.normalize_username') as normalize_username:
             normalize_username.side_effect = lambda x: x
-            User(username='user', password='foo').save()
+            User.objects.create_user(username='user', password='foo')
             self.assertEqual(normalize_username.call_count, 1)
 
     def test_user_double_save(self):
