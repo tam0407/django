@@ -121,7 +121,7 @@ class UserCreationFormTest(TestDataMixin, TestCase):
 
     @skipIf(six.PY2, "Python 2 doesn't support unicode usernames by default.")
     def test_normalize_username(self):
-        ohm_username = 'iamtheΩ'  # U+2126 OHM SIGN
+        ohm_username = 'testΩ'  # U+2126 OHM SIGN
         data = {
             'username': ohm_username,
             'password1': 'pwd2',
