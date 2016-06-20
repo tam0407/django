@@ -179,7 +179,7 @@ class AbstractUserTestCase(TestCase):
 
     def test_user_clean_normalize_email(self):
         """
-        Calling user.save() will call normalize_email()
+        Calling user.clean() will normalize email
         """
         user = User(username='user', password='foo', email='foo@BAR.com')
         user.clean()
@@ -187,7 +187,7 @@ class AbstractUserTestCase(TestCase):
 
     def test_user_clean_normalize_username(self):
         """
-        Calling user.save() will call normalize_username()
+        Calling user.clean() will normalize username
         """
         ohm_username = 'iamtheΩ'  # U+2126 OHM SIGN
         user = User(username=ohm_username, password='foo')
