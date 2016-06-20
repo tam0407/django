@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf.global_settings import PASSWORD_HASHERS
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import get_hasher
