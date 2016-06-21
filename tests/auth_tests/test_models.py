@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.conf.global_settings import PASSWORD_HASHERS
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import get_hasher
@@ -178,21 +180,16 @@ class AbstractUserTestCase(TestCase):
         self.assertIsNone(user2.last_login)
 
     def test_user_clean_normalize_email(self):
-        """
-        Calling user.clean() will normalize email
-        """
         user = User(username='user', password='foo', email='foo@BAR.com')
         user.clean()
         self.assertEqual(user.email, 'foo@bar.com')
 
     def test_user_clean_normalize_username(self):
-        """
-        Calling user.clean() will normalize username
-        """
         ohm_username = 'iamtheΩ'  # U+2126 OHM SIGN
         user = User(username=ohm_username, password='foo')
         user.clean()
         self.assertNotEqual(user.username, ohm_username)
+        self.assertEqual(user.username, 'iamtheΩ')  # U+03A9 GREEK CAPITAL LETTER OMEGA
 
     def test_user_double_save(self):
         """
